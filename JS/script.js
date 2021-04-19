@@ -100,3 +100,31 @@ const icons = [
         family: 'fas',
     },
 ];
+
+
+//CONTAINER ICON
+const container = document.querySelector('.icon');  //CHIAMIAMO IL DIV CHE AVVOLGE CON CLASS 'ICON'
+
+
+//1. STAMPARE LE ICONE A SCHERMO
+printIcons(icons, container);    //I DUE PARAMETRI CHE PORTEREMO GIU NELLE FUNZIONI
+
+
+
+
+
+
+
+
+
+/*******************************************************************************
+ * FUNZIONI
+ *******************************************************************************/
+//STAMPARE A SCHERMO
+function printIcons(icons, container){
+     //GENERARE MARKUP ICONE
+    let html = '';               //VAR VUOTA PER GENERARE MARKUP
+    icons.forEach( (icons) => {
+        
+    });
+};
