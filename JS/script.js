@@ -116,6 +116,16 @@ const container = document.querySelector('.icon');  //CHIAMIAMO IL DIV CHE AVVOL
 
 //2. STAMPARE ICON
 const iconeColor = colorIcons(icons, colors);
+printIcons(iconeColor, container);     //MI DA VALORE HTML NULL
+
+//3. FILTER ICON
+//GENERAZIONE OPTIONS
+const select = document.querySelector('#type');
+const types = getType(iconeColor);
+gentOption(types, select);
+
+
+//FILTRAGGIO CON CHANGE
 
 
 
@@ -133,10 +143,10 @@ function printIcons(icons, container){
      //GENERARE MARKUP ICONE
     let html = '';               //VAR VUOTA PER GENERARE MARKUP
     icons.forEach( (icon) => {
-        const {family, prefix, name} = icon;    //DESTRUTTURIAMO PER PRENDERE GLI OGGETTI INDICATI CHE POI VERRANNO INSERITI NELL'HTML PER RENDERLO DINAMICO
+        const {family, prefix, name, color} = icon;    //DESTRUTTURIAMO PER PRENDERE GLI OGGETTI INDICATI CHE POI VERRANNO INSERITI NELL'HTML PER RENDERLO DINAMICO
         html +=                                             //COPIAMO PARTE DELL'HTML PER RENDERLO DINAMICO CON JS/                                                    
         `<div class="icon p-20">
-            <i class="${family} ${prefix}${name}" style="color: #333"></i>       
+            <i class="${family} ${prefix}${name}" style="color: ${color}"></i>       
             <div class="title">${name}</div>
         </div>`;
         
@@ -153,14 +163,17 @@ function colorIcons (icons, colors){
 
     //ASSEGNARE COLORE PER TIPO
     const colorIcons = icons.map( (icon) =>{
-        const indexTyper = types.indexOf(icon.type);
+        const indexType = types.indexOf(icon.type);
 
         return{
-            ...icon                                 //USIAMO LO SPREAD '...' PER COPIARE L'ARRAY COSI DA PERMMETTERCI DI COLORARE LE ICONE
-            
-        }
+            ...icon,                                 //USIAMO LO SPREAD '...' PER COPIARE L'ARRAY COSI DA PERMMETTERCI DI COLORARE LE ICONE
+            color: colors[indexType],
+           
+        };   
     });
-    return colorIcons
+    //console.log(colorIcons);
+    return colorIcons;
+    
 };
 
 //PREPARAZIONE ICONE COLORATE
@@ -172,4 +185,15 @@ function getType(icons){
         };
     });
     return types;
+};
+
+//GENERAZIONE OPTION PER FILTER 
+function gentOption(types, select){
+    //GENERAZIONE OPTION
+    let options = '';
+    types.forEach( (type) =>{
+        options += `<option value= ${type}>${type}</option>`;
+    });
+
+    select.innerHTML += options;    //SE NON METTIAMO IL + L'ALL DEL FILTER VIENI SOVRASCRITTO 
 };
