@@ -108,7 +108,7 @@ const colors = [
 ];
 
 //CONTAINER ICON
-const container = document.querySelector('.icon');  //CHIAMIAMO IL DIV CHE AVVOLGE CON CLASS 'ICON'
+const container = document.querySelector('.icons');  //CHIAMIAMO IL DIV CHE AVVOLGE CON CLASS 'ICON'
 
 
 //1. STAMPARE LE ICONE A SCHERMO
@@ -119,19 +119,19 @@ const iconeColor = colorIcons(icons, colors);
 printIcons(iconeColor, container);     //MI DA VALORE HTML NULL
 
 //3. FILTER ICON
-//GENERAZIONE OPTIONS
+//A GENERAZIONE OPTIONS
 const select = document.querySelector('#type');
 const types = getType(iconeColor);
 gentOption(types, select);
 
 
-//FILTRAGGIO CON CHANGE
+//B FILTRAGGIO CON CHANGE
+select.addEventListener('change', () =>{
+    const selected = select.value;
 
-
-
-
-
-
+    const iconeFiltrate = iconeFiltrate(iconeColor, selected);
+    printIcons(iconeFiltrate, container); 
+});
 
 
 
@@ -150,12 +150,11 @@ function printIcons(icons, container){
             <div class="title">${name}</div>
         </div>`;
         
-    });//console.log(html);
+    });//console.log(container);
 
     //AGGIUNTA ICONE AL CONTAINER
     container.innerHTML = html;
 };
-
 
 //COLLEZIONE ICONE COLORATE
 function colorIcons (icons, colors){
@@ -196,4 +195,22 @@ function gentOption(types, select){
     });
 
     select.innerHTML += options;    //SE NON METTIAMO IL + L'ALL DEL FILTER VIENI SOVRASCRITTO 
+
+};
+
+//FILTER ICONE COLOR
+function iconeFiltrate(coloredIcons, selected){
+    if(selected === 'all'){
+        return icons;
+    }
+    const fitered = coloredIcons.filter( (coloredIcons) =>{
+        // { 
+        //     name: 'dove',
+        //     prefix: 'fa-',
+        //     type: 'animal',
+        //     family: 'fas',
+        // },
+        return coloredIcons.type === selected;    //SE COLORED ICON E' UGUALE ALLA SELEZIONE PORTALO FUORI
+    });
+    return fitered;
 };
